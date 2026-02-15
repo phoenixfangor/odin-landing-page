@@ -14,7 +14,8 @@ function getComputerChoice() {
 }
 
 // getHumanChoice: prompt the user to enter either 'Rock', 'Paper', or 'Scissors'
-function getHumanChoice(input){
+function getHumanChoice(){
+    let input =  prompt("Choose your weapon");
     console.log(`human choice: ${input}, ${choices.indexOf(input)}`);
     return choices.indexOf(input);
 }
@@ -26,6 +27,7 @@ function getHumanChoice(input){
 // return the higher score as the winner
 
 function playGame() {
+    
     // store human score
     let humanScore = 0
 
@@ -48,7 +50,7 @@ function playGame() {
 // playRound: function that takes humanChoice and computerChoice as parameters
 function playRound(computerScore, humanScore) {
     let computerChoice = getComputerChoice();
-    let humanChoice = getHumanChoice(document.getElementById('getHumanChoice-input').value);
+    let humanChoice = getHumanChoice();
     if (humanChoice === computerChoice) {
         humanScore+=0
         computerScore+=0

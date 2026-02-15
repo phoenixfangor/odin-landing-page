@@ -34,13 +34,7 @@
     <div>
         <ul>
             <li>Let's play Rock, Paper, Scissors!</li>
-            <span>Open your console by pressing F12 or right-clicking and selecting "Inspect".</span>
-            <div class="output">
-                <input type="text" id="getHumanChoice-input" placeholder="Choose Rock, Paper, or Scissors">
-                <button onclick="getHumanChoice(document.getElementById('getHumanChoice-input').value)">Submit</button>
-                <p>Scores: <script>document.write(playRound())</script></p>
-                <p>End Game: <script>document.write(playGame())</script></p>
-            </div>
+            <script>playGame()</script>
         </ul>
     </div>
 
