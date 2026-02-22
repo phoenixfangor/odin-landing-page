@@ -5,6 +5,16 @@
 //Paper beats Rock
 
 const choices = ['Rock', 'Paper', 'Scissors']
+const choiceEmojis = {
+    'Rock': '🪨',
+    'Paper': '📄',
+    'Scissors': '✂️'
+};
+
+// Game state
+let humanScore = 0;
+let computerScore = 0;
+let currentRound = 0;
 
 // getComputerChoice: randomly return either 'Rock', 'Paper', or 'Scissors'
 function getComputerChoice() {
@@ -13,55 +23,63 @@ function getComputerChoice() {
     return choices[randomIndex] 
 }
 
-// getHumanChoice: prompt the user to enter either 'Rock', 'Paper', or 'Scissors'
-function getHumanChoice(){
-    let input =  prompt("Choose your weapon");
-    console.log(`human choice: ${input}, ${choices.indexOf(input)}`);
-    return choices.indexOf(input);
+// playGame: function that plays a 5 round game of Rock Paper Scissors
+function playGame() {
+    // reset the scores to 0
+    humanScore = 0;
+    computerScore = 0;
+    currentRound = 0;
+    
+    // Show dialog for first round
+    showDialogForRound();
 }
 
-
-// playGame: function that plays a 5 round game of Rock Paper Scissors
-// reset the scores to 0
-// loop over playRound 5 times
-// return the higher score as the winner
-
-function playGame() {
-    
-    // store human score
-    let humanScore = 0
-
-    // store computer score
-    let computerScore = 0
-
-    for (let round = 0; round < 5; round++) {
-        playRound();
-    }
-
-    if (humanScore > computerScore) {
-        return "Human wins!"
-    } else if (computerScore > humanScore) {
-        return "Computer wins!"
-    } else {
-        return "It's a tie!"
-    }
+// Show dialog and wait for user input
+function showDialogForRound() {
+    const favDialog = document.getElementById("favDialog");
+    favDialog.showModal();
 }
 
 // playRound: function that takes humanChoice and computerChoice as parameters
-function playRound(computerScore, humanScore) {
+function playRound(humanChoice) {
     let computerChoice = getComputerChoice();
-    let humanChoice = getHumanChoice();
-    if (humanChoice === computerChoice) {
-        humanScore+=0
-        computerScore+=0
-    } else if (humanChoice == 0 && computerChoice == 2){
-        humanScore+=1
-    } else if (humanChoice == 1 && computerChoice == 0){
-        humanScore+=1
-    } else if (humanChoice == 2 && computerChoice == 1){
-        humanScore+=1
+    let humanChoiceIndex = choices.indexOf(humanChoice);
+    let computerChoiceIndex = choices.indexOf(computerChoice);
+
+    outputBox.innerHTML += `${currentRound + 1}. `;
+    console.log(`Round ${currentRound + 1} - Human choice: ${humanChoice}, Computer choice: ${computerChoice}`);
+
+    if (humanChoiceIndex === computerChoiceIndex) {
+        // Tie
+        outputBox.innerHTML += (`[H: ${humanScore} | C: ${computerScore}] =TIE!= `);
+    } else if (
+        (humanChoiceIndex === 0 && computerChoiceIndex === 2) || // Rock beats Scissors
+        (humanChoiceIndex === 1 && computerChoiceIndex === 0) || // Paper beats Rock
+        (humanChoiceIndex === 2 && computerChoiceIndex === 1)    // Scissors beats Paper
+    ) {
+        humanScore++;
+        outputBox.innerHTML += (`[H: ${humanScore} | C: ${computerScore}] =HUMAN!= `);
     } else {
-        computerScore+=1
+        computerScore++;
+        outputBox.innerHTML += (`[H: ${humanScore} | C: ${computerScore}] =COMPUTER!= `);
     }
-    //return humanScore, computerScore;
+    
+    outputBox.innerHTML += ` (Human: ${choiceEmojis[humanChoice]}, Computer: ${choiceEmojis[computerChoice]})\n`;
+    
+    currentRound++;
+    
+    // Check if game is over
+    if (currentRound < 5) {
+        // Play next round
+        showDialogForRound();
+    } else {
+        // Game over, announce winner
+        if (humanScore > computerScore) {
+            outputBox.innerHTML += "=== GAME OVER: Human wins! ===\n";
+        } else if (computerScore > humanScore) {
+            outputBox.innerHTML += "=== GAME OVER: Computer wins! ===\n";
+        } else {
+            outputBox.innerHTML += "=== GAME OVER: It's a tie! ===\n";
+        }
+    }
 }

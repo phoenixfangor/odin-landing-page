@@ -18,25 +18,77 @@
             padding: 2px 4px;
             border-radius: 4px;
         }
-        .output {
-            border-width: 2px;
-            border-style: solid;
-            border-color: #240e29;
-            padding: 10px;
+        output {
             margin-top: 10px;
             width: fit-content;
+            white-space: pre-wrap;
         }
         
-        </style>
+    </style>
 </head>
 <body>
     <script src="./rock-paper-scissors.js"></script>
     <div>
-        <ul>
-            <li>Let's play Rock, Paper, Scissors!</li>
-            <script>playGame()</script>
-        </ul>
+        <h1>Rock, Paper, Scissors</h1>
+            <dialog id="favDialog">
+                <form>
+                    <p>
+                    <label>
+                        Choose your weapon:
+                        <select>
+                        <option value="default">Choose…</option>
+                        <option>Rock</option>
+                        <option>Paper</option>
+                        <option>Scissors</option>
+                        </select>
+                    </label>
+                    </p>
+                    <div>
+                    <button value="cancel" formmethod="dialog">Cancel</button>
+                    <button id="confirmBtn" value="default">Confirm</button>
+                    </div>
+                </form>
+                </dialog>
+            <p>
+            <button id="showDialog">Let's play Rock, Paper, Scissors!</button>
+            </p>
+            <output></output>
     </div>
+    <script>        
+        const showButton = document.getElementById("showDialog");
+        const favDialog = document.getElementById("favDialog");
+        const outputBox = document.querySelector("output");
+        const selectEl = favDialog.querySelector("select");
+        const confirmBtn = favDialog.querySelector("#confirmBtn");
+
+        // "Show the dialog" button starts the game
+        showButton.addEventListener("click", () => {
+            outputBox.innerHTML = ""; // Clear previous output
+            playGame();
+        });
+
+        // Prevent the "confirm" button from the default behavior of submitting the form, and close the dialog with the `close()` method, which triggers the "close" event.
+        confirmBtn.addEventListener("click", (event) => {
+            event.preventDefault(); // We don't want to submit this fake form
+            const selectedValue = selectEl.value;
+            
+            if (selectedValue === "default") {
+                alert("Please select Rock, Paper, or Scissors!");
+                return;
+            }
+            
+            favDialog.close(selectedValue); // Close with the selected value
+        });
+        
+        // When dialog closes, play the round with the user's choice
+        favDialog.addEventListener("close", () => {
+            const userChoice = favDialog.returnValue;
+            
+            if (userChoice && userChoice !== "default" && userChoice !== "cancel") {
+                playRound(userChoice);
+            }
+        });
+    </script>
 
 </body>
 </html>
