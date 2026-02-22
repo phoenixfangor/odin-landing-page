@@ -9,6 +9,12 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             background-color: blanchedalmond;
+            display: flex;
+            justify-content: center;
+        }
+        div {
+            max-width: 600px;
+            text-align: center;
         }
         input {
             margin-right: 10px;
@@ -22,6 +28,9 @@
             margin-top: 10px;
             width: fit-content;
             white-space: pre-wrap;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
         }
         
     </style>
@@ -53,6 +62,7 @@
             <button id="showDialog">Let's play Rock, Paper, Scissors!</button>
             </p>
             <output></output>
+
     </div>
     <script>        
         const showButton = document.getElementById("showDialog");

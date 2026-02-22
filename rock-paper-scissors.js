@@ -75,11 +75,11 @@ function playRound(humanChoice) {
     } else {
         // Game over, announce winner
         if (humanScore > computerScore) {
-            outputBox.innerHTML += "=== GAME OVER: Human wins! ===\n";
+            outputBox.innerHTML += "\n=== GAME OVER: Human wins! ===\n";
         } else if (computerScore > humanScore) {
-            outputBox.innerHTML += "=== GAME OVER: Computer wins! ===\n";
+            outputBox.innerHTML += "\n=== GAME OVER: Computer wins! ===\n";
         } else {
-            outputBox.innerHTML += "=== GAME OVER: It's a tie! ===\n";
+            outputBox.innerHTML += "\n=== GAME OVER: It's a tie! ===\n";
         }
     }
 }
